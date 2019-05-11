@@ -4,10 +4,16 @@
 }
 
 .Links {
+    align-items: center;
+    background-color: aliceblue;
     float:center;
     top: 0px;
 }
 
+.Search, .Create {
+    background-color: black;
+    width: initial;
+}
 a {
     color: black;
 }
@@ -19,15 +25,18 @@ a:hover{
 }
 
 .navbar{
-    width: 100%;
-    display: table;
+    display: flex;
+    flex-direction: column;
+    width: auto;
 }
 
 .navLinks {
     display: table-cell;
+    align-items: center;
 }
 
 .navLinks:hover {
     color:cadetblue;
     cursor:pointer;
 }
+

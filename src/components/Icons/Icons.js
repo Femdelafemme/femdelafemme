@@ -17,6 +17,7 @@ class Icons extends React.Component {
     onItemClick = (x) => {  
         let clickedPhoto = x.currentTarget.dataset.div_id;
         this.props.showIconPhoto(clickedPhoto);
+        this.props.onRouteChange('comments');
     }
 
     render() {

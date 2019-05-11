@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 //import { setSearchField } from '../Actions';
 import ErrorBoundary from '../ErrorBoundary';
 import Navigation from '../components/Navigation/Navigation';
-import Meme from '../components/Images/Meme';
+// import Meme from '../components/Images/Meme';
 import Register from '../components/Register/Register';
 import SignIn from '../components/SignIn/SignIn';
 import Icons from '../components/Icons/Icons';
 import Comments from '../components/Comments/Comments';
+import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
 
 import 'tachyons';
 import './App.css';
@@ -39,7 +40,6 @@ const initialState = {
                 email: '',
                 entries: [],
                 joined: '',
-                uploadedPic: ''
             }
 }
 
@@ -60,10 +60,9 @@ class App extends Component {
             search: '',
             imageUrl:'',
             id: 0,
-            route:'signIn',
+            route:'comments',
             isSignedIn:false,
             submitWithoutEmail: false,
-            isMemeOn:true,
             commentScore: 0,
             comment:'',
             comments:[],
@@ -73,7 +72,6 @@ class App extends Component {
                 email: '',
                 entries: [],
                 joined: '',
-                uploadedPic: ''
             }
         }
     }
@@ -95,9 +93,6 @@ class App extends Component {
         this.setState({iconsloaded: true});
     }
     
-    turnMemeOn = () => {
-        this.setState({isMemeOn:true})
-    }
     
     deleteImageUrl = () => {
         this.setState({imageUrl: ''})
@@ -112,8 +107,6 @@ class App extends Component {
     }
     
     showIconPhoto = (i) => {
-        this.setState({isMemeOn:false});
-        this.setState({imageUrl: i});
         this.getComments(i);
     }
     
@@ -156,9 +149,7 @@ class App extends Component {
        
     onButtonSubmit = () => {
        if (this.state.user.email === '') {
-        this.setState({isMemeOn:false});
        } else {
-        this.setState({isMemeOn:false});
         this.state.input.trim();
         this.setState({imageUrl: this.state.input});
         const final = "Autoname" + (this.state.imageUrl.slice(0,20));
@@ -191,7 +182,6 @@ class App extends Component {
         })
         .then(response => response.json())
         .then(picture => {
-            this.setState({isMemeOn:false});
             let pic = picture.link;
             this.setState({imageUrl: pic});
             console.log("Photo found successfully");
@@ -210,8 +200,8 @@ class App extends Component {
    }
 
   render() {
-      const { menu, imageUrl, route, isSignedIn, input, isMemeOn, submitWithoutEmail, icons, comments } = this.state;
-      const { entries, username, email, uploadedPic, id } = this.state.user;
+      const { menu, imageUrl, route, isSignedIn, isMemeOn, submitWithoutEmail, icons, comments } = this.state;
+      const { entries, username, email, id } = this.state.user;
     return (
       <div className="App">
         <Navigation 
@@ -223,8 +213,9 @@ class App extends Component {
             isSignedIn={isSignedIn}
             showPhotoMenu={menu}
         />
-        { route === 'home'
-        ?   <main>
+         <If condition={route  === 'home'}>
+            <Then>
+          <main>
             <ErrorBoundary>
             <Icons
                 loadPhotos={this.loadPhotos}
@@ -237,41 +228,39 @@ class App extends Component {
                 submitWithoutEmail={submitWithoutEmail}
                 icons={icons}
             />
-            <Meme
-                turnMemeOn={this.turnMemeOn}
-                deleteImageUrl={this.deleteImageUrl}
-                isMemeOn={isMemeOn}
-                uploadedPic={uploadedPic}
-                imageUrl={imageUrl}
-                input={input}
-                email={email}
-                submitWithoutEmail={submitWithoutEmail}
-            />
-            <Comments
-                pushComments={this.pushComments}
-                username={username} 
-                imageUrl={imageUrl}
-                email={email}
-                id={id}
-                isMemeOn={isMemeOn}
-                comments={comments}
-            />
             </ErrorBoundary>
             </main>
-        : (
-        route === 'signIn'
-            ? <SignIn  
+            </Then>
+            <ElseIf condition={route === 'comments'}>
+                     <main>
+                        <ErrorBoundary>
+                        <Comments
+                            pushComments={this.pushComments}
+                            username={username} 
+                            imageUrl={imageUrl}
+                            email={email}
+                            id={id}
+                            isMemeOn={isMemeOn}
+                            comments={comments}
+                        />
+                        </ErrorBoundary>
+                        </main>
+            </ElseIf>
+            <ElseIf condition={route === 'signIn'}>
+            <SignIn  
                 loadUser={this.loadUser}
                 onRouteChange={this.onRouteChange}
                 loadPhotos={this.loadPhotos}
                 email={email}
                 />
-            : <Register 
+            </ElseIf> 
+            <Else>
+            <Register 
                 loadUser={this.loadUser} 
                 onRouteChange={this.onRouteChange}
                 />
-            )
-        }
+            </Else>
+             </If>
       </div>
     );
   }
