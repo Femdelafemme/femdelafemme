@@ -1,0 +1,33 @@
+.InputBoxes {
+    float: center;
+    top: 0px;
+}
+
+.Links {
+    float:center;
+    top: 0px;
+}
+
+a {
+    color: black;
+}
+
+a:hover{
+    text-decoration: none;
+    color:cadetblue;
+    cursor:pointer;
+}
+
+.navbar{
+    width: 100%;
+    display: table;
+}
+
+.navLinks {
+    display: table-cell;
+}
+
+.navLinks:hover {
+    color:cadetblue;
+    cursor:pointer;
+}

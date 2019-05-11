@@ -1,0 +1,24 @@
+.Tilt {
+    z-index: 0;
+}
+
+.Uploaded {
+    height: 60vh;
+    z-index: 0;
+    position:center;
+}
+
+.MemeInfo {
+    display:flex;
+    flex-direction: row;
+}
+
+#memeText, memeScore {
+    display: inline-block;
+    float:left;
+    position:center;
+}
+
+#memeText:hover, #memeScore:hover {
+    cursor:pointer;
+}

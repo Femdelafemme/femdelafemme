@@ -1,0 +1,31 @@
+.App {
+  text-align: center;
+}
+
+
+Main {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Icons {
+    width: 25%;
+    height:100vh;
+    direction: rtl;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.Meme {
+    display:flex;
+    flex-direction: column;
+}
+
+.Comments {
+    
+    overflow-y: auto;
+    width: 25%;
+    height:100%;
+}
+
